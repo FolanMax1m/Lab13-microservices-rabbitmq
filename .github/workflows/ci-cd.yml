@@ -8,16 +8,12 @@ on:
 
 env:
   IMAGE_NAME: lab13-cicd
-  working-directory: ./lab13-cicd
 
 jobs:
   # —— 1. CI: Тести
   test:
     name: Run Tests
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./lab13-cicd
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,9 +26,11 @@ jobs:
           cache-dependency-path: ./lab13-cicd/package-lock.json
 
       - name: Install dependencies
+        working-directory: ./lab13-cicd
         run: npm ci
 
       - name: Run unit tests
+        working-directory: ./lab13-cicd
         run: npm test
 
   # ─── 2. Build & Push Docker Image ──────────────────────────────
